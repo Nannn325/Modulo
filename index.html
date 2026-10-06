@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kalkulator Operasi Modulo - Hitung sisa bagi dua angka dengan tampilan modern dan elegan.">
+    <title>Kalkulator Modulo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <!-- Header -->
+            <div class="header">
+                <div class="header__icon">%</div>
+                <h1 class="header__title">Operasi Modulo</h1>
+                <p class="header__subtitle">Hitung sisa pembagian dua angka</p>
+            </div>
+
+            <!-- Form -->
+            <form id="modulo-form" method="POST" action="/">
+                <div class="form-group">
+                    <label for="angka1">Angka Pertama (Pembilang)</label>
+                    <input
+                        type="text"
+                        id="angka1"
+                        name="angka1"
+                        placeholder="Masukkan angka pertama..."
+                        value="{{ angka1 if angka1 else '' }}"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <!-- Modulo Symbol Divider -->
+                <div class="divider-mod">
+                    <div class="divider-mod__line"></div>
+                    <div class="divider-mod__symbol">%</div>
+                    <div class="divider-mod__line"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="angka2">Angka Kedua (Pembagi)</label>
+                    <input
+                        type="text"
+                        id="angka2"
+                        name="angka2"
+                        placeholder="Masukkan angka kedua..."
+                        value="{{ angka2 if angka2 else '' }}"
+                        autocomplete="off"
+                    >
+                </div>
+
+                <button type="submit" id="btn-calculate" class="btn-calculate">
+                    Hitung Modulo
+                </button>
+
+                <button type="button" id="btn-reset" class="btn-reset" onclick="resetForm()">
+                    Reset
+                </button>
+            </form>
+
+            <!-- Result -->
+            {% if hasil is not none %}
+            <div class="result-card" id="result-card">
+                <div class="result-card__check">✓</div>
+                <div class="result-card__label">Hasil Modulo</div>
+                <div class="result-card__value">{{ hasil }}</div>
+                <div class="result-card__expression">{{ ekspresi }}</div>
+            </div>
+            {% endif %}
+
+            <!-- Error -->
+            {% if error %}
+            <div class="error-msg" id="error-msg">
+                <span>{{ error }}</span>
+            </div>
+            {% endif %}
+
+            <!-- Info Tooltip -->
+            <div class="info-tooltip">
+                <strong>Apa itu Modulo?</strong><br>
+                Operasi modulo menghasilkan <strong>sisa pembagian</strong> dari dua angka.
+                Contoh: <strong>10 mod 3 = 1</strong>, karena 10 ÷ 3 = 3 sisa <strong>1</strong>.
+            </div>
+
+            <!-- Footer -->
+            <div class="footer">
+                Kalkulator Modulo &copy; 2026
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function resetForm() {
+            document.getElementById('angka1').value = '';
+            document.getElementById('angka2').value = '';
+            const resultCard = document.getElementById('result-card');
+            const errorMsg = document.getElementById('error-msg');
+            if (resultCard) resultCard.style.display = 'none';
+            if (errorMsg) errorMsg.style.display = 'none';
+        }
+
+        // Focus animation for inputs
+        document.querySelectorAll('.form-group input').forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.classList.add('focused');
+            });
+            input.addEventListener('blur', () => {
+                input.parentElement.classList.remove('focused');
+            });
+        });
+    </script>
+</body>
+</html>
